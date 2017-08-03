@@ -1,0 +1,23 @@
+{
+  "name": "npm-shell",
+  "version": "1.0.0",
+  "description": "nodejs npm shell tool",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Beven91/npm-shell.git"
+  },
+  "keywords": [
+    "npm",
+    "shell"
+  ],
+  "author": "Beven",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Beven91/npm-shell/issues"
+  },
+  "homepage": "https://github.com/Beven91/npm-shell#readme"
+}
