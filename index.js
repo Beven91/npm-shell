@@ -120,4 +120,4 @@ function combine(source, target) {
 }
 
 // 公布引用
-module.exports.Npm = Npm;
+module.exports = Npm;
