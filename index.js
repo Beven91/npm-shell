@@ -110,6 +110,16 @@ Npm.prototype.exec = function (name, args, env) {
     })
 }
 
+/**
+ * 执行npm publish
+ * @param name 要执行的脚本命令名称
+ * @param args 其他参数
+ * @param cwd 运行目录
+ */
+Npm.prototype.publish = function () {
+    return this.command('publish')
+}
+
 function combine(source, target) {
     var keys = Object.keys(target);
     source = source || {};

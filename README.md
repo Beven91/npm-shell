@@ -24,6 +24,9 @@
 
   //npm uninstall
   npm.unInstall('xxx')
+
+  //npm publish
+  npm.publish();
     
   //npm start
   npm.start();
