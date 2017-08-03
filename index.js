@@ -111,6 +111,22 @@ Npm.prototype.exec = function (name, args, env) {
 }
 
 /**
+ * 执行shell命令
+ * @param  {String} name 命令名称
+ * @param  {Array} args 命令参数
+ * @param {Object} env 环境配置
+ */
+Npm.prototype.shell = function (name, args, env) {
+  args = args || []
+  name = process.platform === 'win32' ? name + '.cmd' : name
+  child_process.spawnSync(name, args, {
+    cwd: this.cwd,
+    env: combine(env, process.env),
+    stdio: [process.stdin, process.stdout, process.stderr]
+  })
+}
+
+/**
  * 执行npm publish
  * @param name 要执行的脚本命令名称
  * @param args 其他参数
