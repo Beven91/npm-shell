@@ -52,6 +52,9 @@
   //with env
   npm.command('link','xx',{NODE_ENV:'xxx'})
   npm.command('link','xx','xx'....,{NODE_ENV:'xxx'})
+
+  //execute shell command
+  npm.shell('react-native',['link','xx'],{NODE_ENV:'xxx'})
   
 
 ```
