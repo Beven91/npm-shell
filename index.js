@@ -75,7 +75,6 @@ Npm.prototype.command = function () {
   if (Object.prototype.toString.call(args[args.length - 1]) === '[object Object]') {
     env = args.pop();
   }
-  console.log(args);
   return this[run](args, env);
 }
 
