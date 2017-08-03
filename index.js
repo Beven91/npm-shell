@@ -10,32 +10,32 @@ var child_process = require('child_process');
 var run = '@@__run__@@'
 
 function Npm(cwd) {
-    this.cwd = cwd || process.cwd()
+  this.cwd = cwd || process.cwd()
 }
 
 /**
  * 执行Npm start
  */
 Npm.prototype.start = function () {
-    this[run](['start'])
+  this[run](['start'])
 }
 
 /**
  * 执行Npm install
  */
 Npm.prototype.install = function (script) {
-    var args = (script || '').split(' ')
-    args.unshift('install')
-    this[run](args)
+  var args = (script || '').split(' ')
+  args.unshift('install')
+  this[run](args)
 }
 
 /**
  * 执行Npm uninstall
  */
 Npm.prototype.unInstall = function (script) {
-    var args = (script || '').split(' ')
-    args.unshift('uninstall')
-    this[run](args)
+  var args = (script || '').split(' ')
+  args.unshift('uninstall')
+  this[run](args)
 }
 
 /**
@@ -45,10 +45,10 @@ Npm.prototype.unInstall = function (script) {
  * @param cwd 运行目录
  */
 Npm.prototype.run = function (name, args, cwd) {
-    args = args || []
-    args.unshift(name)
-    args.unshift('run')
-    this[run](args)
+  args = args || []
+  args.unshift(name)
+  args.unshift('run')
+  this[run](args)
 }
 
 /**
@@ -56,12 +56,12 @@ Npm.prototype.run = function (name, args, cwd) {
  * @param  {Array} args 参数 
  */
 Npm.prototype[run] = function (args, env) {
-    var Npm = process.platform === 'win32' ? 'Npm.cmd' : 'Npm'
-    return child_process.spawnSync(Npm, args, {
-        cwd: this.cwd,
-        env: combine(env, process.env),
-        stdio: [process.stdin, process.stdout, process.stderr]
-    })
+  var Npm = process.platform === 'win32' ? 'Npm.cmd' : 'Npm'
+  return child_process.spawnSync(Npm, args, {
+    cwd: this.cwd,
+    env: combine(env, process.env),
+    stdio: [process.stdin, process.stdout, process.stderr]
+  })
 }
 
 /**
@@ -70,12 +70,13 @@ Npm.prototype[run] = function (args, env) {
  * @param {String} ...args
  */
 Npm.prototype.command = function () {
-    var args = Array.prototype.slice(arguments);
-    var env = undefined;
-    if (typeof args[args.length - 1] === 'object') {
-        env = args.pop();
-    }
-    return this[run](args, env);
+  var args = Array.prototype.slice.call(arguments);
+  var env = undefined;
+  if (Object.prototype.toString.call(args[args.length - 1]) === '[object Object]') {
+    env = args.pop();
+  }
+  console.log(args);
+  return this[run](args, env);
 }
 
 
@@ -85,13 +86,13 @@ Npm.prototype.command = function () {
  * @param  {Array} args 参数
  */
 Npm.prototype.node = function (js, args, env) {
-    args = args || []
-    args.unshift(js)
-    return child_process.spawnSync('node', args, {
-        cwd: this.cwd,
-        env: combine(env, process.env),
-        stdio: [process.stdin, process.stdout, process.stderr]
-    })
+  args = args || []
+  args.unshift(js)
+  return child_process.spawnSync('node', args, {
+    cwd: this.cwd,
+    env: combine(env, process.env),
+    stdio: [process.stdin, process.stdout, process.stderr]
+  })
 }
 
 /**
@@ -100,14 +101,14 @@ Npm.prototype.node = function (js, args, env) {
  * @param  {Array} args 参数
  */
 Npm.prototype.exec = function (name, args, env) {
-    args = args || []
-    name = path.join(this.cwd, 'node_modules/.bin/', name)
-    name = process.platform === 'win32' ? name + '.cmd' : name
-    child_process.spawnSync(name, args, {
-        cwd: this.cwd,
-        env: combine(env, process.env),
-        stdio: [process.stdin, process.stdout, process.stderr]
-    })
+  args = args || []
+  name = path.join(this.cwd, 'node_modules/.bin/', name)
+  name = process.platform === 'win32' ? name + '.cmd' : name
+  child_process.spawnSync(name, args, {
+    cwd: this.cwd,
+    env: combine(env, process.env),
+    stdio: [process.stdin, process.stdout, process.stderr]
+  })
 }
 
 /**
@@ -117,16 +118,16 @@ Npm.prototype.exec = function (name, args, env) {
  * @param cwd 运行目录
  */
 Npm.prototype.publish = function () {
-    return this.command('publish')
+  return this.command('publish')
 }
 
 function combine(source, target) {
-    var keys = Object.keys(target);
-    source = source || {};
-    keys.forEach(function (key) {
-        source[key] = target[key];
-    })
-    return source;
+  var keys = Object.keys(target);
+  source = source || {};
+  keys.forEach(function (key) {
+    source[key] = target[key];
+  })
+  return source;
 }
 
 // 公布引用
