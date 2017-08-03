@@ -1,10 +1,11 @@
 /**
- * 名称：npm 执行工具
+ * 名称：Npm 执行工具
  * 日期：2017-08-03
- * 描述：通过代码方式执行npm命令
+ * 描述：通过代码方式执行Npm命令
  */
 
 var path = require('path')
+var child_process = require('child_process');
 
 var run = '@@__run__@@'
 
@@ -13,14 +14,14 @@ function Npm(cwd) {
 }
 
 /**
- * 执行npm start
+ * 执行Npm start
  */
 Npm.prototype.start = function () {
     this[run](['start'])
 }
 
 /**
- * 执行npm install
+ * 执行Npm install
  */
 Npm.prototype.install = function (script) {
     var args = (script || '').split(' ')
@@ -29,7 +30,7 @@ Npm.prototype.install = function (script) {
 }
 
 /**
- * 执行npm uninstall
+ * 执行Npm uninstall
  */
 Npm.prototype.unInstall = function (script) {
     var args = (script || '').split(' ')
@@ -38,7 +39,7 @@ Npm.prototype.unInstall = function (script) {
 }
 
 /**
- * 执行npm指定命令
+ * 执行Npm指定命令
  * @param name 要执行的脚本命令名称
  * @param args 其他参数
  * @param cwd 运行目录
@@ -51,22 +52,21 @@ Npm.prototype.run = function (name, args, cwd) {
 }
 
 /**
- * 执行一个npm脚本命令
+ * 执行一个Npm脚本命令
  * @param  {Array} args 参数 
  */
 Npm.prototype[run] = function (args, env) {
-    var npm = process.platform === 'win32' ? 'npm.cmd' : 'npm'
-    require('child_process').spawnSync(npm, args, {
+    var Npm = process.platform === 'win32' ? 'Npm.cmd' : 'Npm'
+    return child_process.spawnSync(Npm, args, {
         cwd: this.cwd,
-        env: env,
+        env: combine(env, process.env),
         stdio: [process.stdin, process.stdout, process.stderr]
     })
-    return { status: 0 };
 }
 
 /**
- * 执行npm脚本命令
- * npm xxx
+ * 执行Npm脚本命令
+ * Npm xxx
  * @param {String} ...args
  */
 Npm.prototype.command = function () {
@@ -87,7 +87,7 @@ Npm.prototype.command = function () {
 Npm.prototype.node = function (js, args, env) {
     args = args || []
     args.unshift(js)
-    return require('child_process').spawnSync('node', args, {
+    return child_process.spawnSync('node', args, {
         cwd: this.cwd,
         env: combine(env, process.env),
         stdio: [process.stdin, process.stdout, process.stderr]
@@ -103,7 +103,7 @@ Npm.prototype.exec = function (name, args, env) {
     args = args || []
     name = path.join(this.cwd, 'node_modules/.bin/', name)
     name = process.platform === 'win32' ? name + '.cmd' : name
-    require('child_process').spawnSync(name, args, {
+    child_process.spawnSync(name, args, {
         cwd: this.cwd,
         env: combine(env, process.env),
         stdio: [process.stdin, process.stdout, process.stderr]
@@ -120,4 +120,4 @@ function combine(source, target) {
 }
 
 // 公布引用
-module.exports = Npm
+module.exports.Npm = Npm;

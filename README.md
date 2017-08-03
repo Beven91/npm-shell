@@ -14,7 +14,7 @@
 
 ```js
 
-  const Npm = require('npm-shell');
+  const Npm = require('npm-shell').Npm;
 
   const npm = new Npm(projectRoot);
 
