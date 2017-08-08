@@ -1,9 +1,10 @@
 ## npm-shell
 
+[![NPM version][npm-image]][npm-url]
+
 ### 一、简介篇
 
 通过nodejs执行npm相关命令的工具
-
 
 ### 二、安装篇
 
