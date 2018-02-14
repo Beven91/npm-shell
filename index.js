@@ -16,8 +16,8 @@ function Npm(cwd) {
 /**
  * 执行Npm start
  */
-Npm.prototype.start = function () {
-  this[run](['start'])
+Npm.prototype.start = function (env) {
+  this[run](['start'],env)
 }
 
 /**
@@ -44,11 +44,11 @@ Npm.prototype.unInstall = function (script) {
  * @param args 其他参数
  * @param cwd 运行目录
  */
-Npm.prototype.run = function (name, args, cwd) {
+Npm.prototype.run = function (name, args, cwd,env) {
   args = args || []
   args.unshift(name)
   args.unshift('run')
-  this[run](args)
+  this[run](args,env)
 }
 
 /**
