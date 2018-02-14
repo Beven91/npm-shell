@@ -9,7 +9,8 @@ var child_process = require('child_process');
 
 var run = '@@__run__@@'
 
-function Npm(cwd) {
+function Npm(cwd, output) {
+  this.output = output;
   this.cwd = cwd || process.cwd()
 }
 
@@ -60,7 +61,7 @@ Npm.prototype[run] = function (args, env) {
   return child_process.spawnSync(Npm, args, {
     cwd: this.cwd,
     env: combine(env, process.env),
-    stdio: [process.stdin, process.stdout, process.stderr]
+    stdio: stdio(this.output)
   })
 }
 
@@ -90,7 +91,7 @@ Npm.prototype.node = function (js, args, env) {
   return child_process.spawnSync('node', args, {
     cwd: this.cwd,
     env: combine(env, process.env),
-    stdio: [process.stdin, process.stdout, process.stderr]
+    stdio: stdio(this.output)
   })
 }
 
@@ -106,7 +107,7 @@ Npm.prototype.exec = function (name, args, env) {
   child_process.spawnSync(name, args, {
     cwd: this.cwd,
     env: combine(env, process.env),
-    stdio: [process.stdin, process.stdout, process.stderr]
+    stdio: stdio(this.output)
   })
 }
 
@@ -122,7 +123,7 @@ Npm.prototype.shell = function (name, args, env) {
   child_process.spawnSync(name, args, {
     cwd: this.cwd,
     env: combine(env, process.env),
-    stdio: [process.stdin, process.stdout, process.stderr]
+    stdio: stdio(this.output)
   })
 }
 
@@ -134,6 +135,10 @@ Npm.prototype.shell = function (name, args, env) {
  */
 Npm.prototype.publish = function () {
   return this.command('publish')
+}
+
+function stdio(output) {
+  return output !== false ? [process.stdin, process.stdout, process.stderr] : null;
 }
 
 function combine(source, target) {

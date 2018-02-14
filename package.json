@@ -1,6 +1,6 @@
 {
   "name": "npm-shell",
-  "version": "1.0.7",
+  "version": "1.0.10",
   "description": "nodejs npm shell tool",
   "main": "index.js",
   "scripts": {
