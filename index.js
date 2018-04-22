@@ -49,7 +49,7 @@ Npm.prototype.run = function (name, args, cwd,env) {
   args = args || []
   args.unshift(name)
   args.unshift('run')
-  this[run](args,env)
+  return this[run](args,env)
 }
 
 /**
